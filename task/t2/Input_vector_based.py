@@ -1,30 +1,25 @@
 import asyncio
 from typing import Any
-from langchain_community.vectorstores import FAISS
-from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.documents import Document
 from langchain_openai import AzureOpenAIEmbeddings, AzureChatOpenAI
-from pydantic import SecretStr
-from task._constants import DIAL_URL, API_KEY
-from task.user_client import UserClient
 
-#TODO:
+# TODO:
 # Before implementation open the `vector_based_grounding.png` to see the flow of app
 
-#TODO:
+# TODO:
 # Provide System prompt. Goal is to explain LLM that in the user message will be provide rag context that is retrieved
 # based on user question and user question and LLM need to answer to user based on provided context
 SYSTEM_PROMPT = """
 """
 
-#TODO:
+# TODO:
 # Should consist retrieved context and user question
 USER_PROMPT = """
 """
 
 
 def format_user_document(user: dict[str, Any]) -> str:
-    #TODO:
+    # TODO:
     # Prepare context from users JSONs in the same way as in `no_grounding.py` `join_context` method (collect as one string)
     raise NotImplementedError
 
@@ -37,7 +32,7 @@ class UserRAG:
 
     async def __aenter__(self):
         print("🔎 Loading all users...")
-        #TODO:
+        # TODO:
         # 1. Get all users (use UserClient)
         # 2. Prepare array of Documents where page_content is `format_user_document(user)` (you need to iterate through users)
         # 3. call `_create_vectorstore_with_batching` (don't forget that its async) and setup it as obj var `vectorstore`
@@ -48,7 +43,7 @@ class UserRAG:
         pass
 
     async def _create_vectorstore_with_batching(self, documents: list[Document], batch_size: int = 100):
-        #TODO:
+        # TODO:
         # 1. Split all `documents` on batches (100 documents in 1 batch). We need it since Embedding models have limited context window
         # 2. Iterate through document batches and create array with tasks that will generate FAISS vector stores from documents:
         #    https://api.python.langchain.com/en/latest/vectorstores/langchain_community.vectorstores.faiss.FAISS.html#langchain_community.vectorstores.faiss.FAISS.afrom_documents
@@ -59,7 +54,7 @@ class UserRAG:
         raise NotImplementedError
 
     async def retrieve_context(self, query: str, k: int = 10, score: float = 0.1) -> str:
-        #TODO:
+        # TODO:
         # 1. Make similarity search:
         #    https://api.python.langchain.com/en/latest/vectorstores/langchain_community.vectorstores.faiss.FAISS.html#langchain_community.vectorstores.faiss.FAISS.similarity_search_with_relevance_scores
         # 2. Create `context_parts` empty array (we will collect content here)
@@ -73,7 +68,7 @@ class UserRAG:
         raise NotImplementedError
 
     def generate_answer(self, augmented_prompt: str) -> str:
-        #TODO:
+        # TODO:
         # 1. Create messages array with:
         #       - system prompt
         #       - user prompt
@@ -84,8 +79,7 @@ class UserRAG:
 
 
 async def main():
-
-    #TODO:
+    # TODO:
     # 1. Create AzureOpenAIEmbeddings
     #    embedding model 'text-embedding-3-small-1'
     #    I would recommend to set up dimensions as 384
@@ -97,9 +91,9 @@ async def main():
         print(" - Who is John?")
         while True:
             user_question = input("> ").strip()
-            if user_question.lower() in ['quit', 'exit']:
+            if user_question.lower() in ["quit", "exit"]:
                 break
-            #TODO:
+            # TODO:
             # 1. Retrieve context
             # 2. Make augmentation
             # 3. Generate answer and print it

@@ -6,7 +6,6 @@ from task._constants import USER_SERVICE_ENDPOINT
 
 
 class UserClient:
-
     def get_all_users(self) -> list[dict[str, Any]]:
         headers = {"Content-Type": "application/json"}
 
@@ -31,11 +30,11 @@ class UserClient:
         raise Exception(f"HTTP {response.status_code}: {response.text}")
 
     def search_users(
-            self,
-            name: Optional[str] = None,
-            surname: Optional[str] = None,
-            email: Optional[str] = None,
-            gender: Optional[str] = None,
+        self,
+        name: Optional[str] = None,
+        surname: Optional[str] = None,
+        email: Optional[str] = None,
+        gender: Optional[str] = None,
     ) -> list[dict[str, Any]]:
         headers = {"Content-Type": "application/json"}
 

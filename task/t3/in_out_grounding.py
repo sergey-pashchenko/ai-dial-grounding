@@ -1,17 +1,4 @@
-import asyncio
-from typing import Any, Optional
-
-from langchain_chroma import Chroma
-from langchain_core.messages import HumanMessage
-from langchain_core.documents import Document
-from langchain_core.output_parsers import PydanticOutputParser
-from langchain_core.prompts import SystemMessagePromptTemplate, ChatPromptTemplate
-from langchain_openai import AzureOpenAIEmbeddings, AzureChatOpenAI
-from pydantic import SecretStr, BaseModel, Field
-from task._constants import DIAL_URL, API_KEY
-from task.user_client import UserClient
-
-#TODO: Info about app:
+# TODO: Info about app:
 # HOBBIES SEARCHING WIZARD
 # Searches users by hobbies and provides their full info in JSON format:
 #   Input: `I need people who love to go to mountains`
@@ -52,6 +39,5 @@ from task.user_client import UserClient
 # TASK:
 # Implement such application as described on the `flow.png` with adaptive vector based grounding and 'lite' version of
 # output grounding (verification that such user exist and fetch full user info)
-
 
 

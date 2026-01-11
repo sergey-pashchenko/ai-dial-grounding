@@ -1,12 +1,7 @@
 import asyncio
 from typing import Any
-from langchain_core.messages import SystemMessage, HumanMessage
-from langchain_openai import AzureChatOpenAI
-from pydantic import SecretStr
-from task._constants import DIAL_URL, API_KEY
-from task.user_client import UserClient
 
-#TODO:
+# TODO:
 # Before implementation open the `flow_diagram.png` to see the flow of app
 
 BATCH_SYSTEM_PROMPT = """You are a user search assistant. Your task is to find users from the provided list that match the search criteria.
@@ -49,18 +44,20 @@ class TokenTracker:
 
     def get_summary(self):
         return {
-            'total_tokens': self.total_tokens,
-            'batch_count': len(self.batch_tokens),
-            'batch_tokens': self.batch_tokens
+            "total_tokens": self.total_tokens,
+            "batch_count": len(self.batch_tokens),
+            "batch_tokens": self.batch_tokens,
         }
 
-#TODO:
+
+# TODO:
 # 1. Create AzureChatOpenAI client
 #    hint: api_version set as empty string if you gen an error that indicated that api_version cannot be None
 # 2. Create TokenTracker
 
+
 def join_context(context: list[dict[str, Any]]) -> str:
-    #TODO:
+    # TODO:
     # You cannot pass raw JSON with user data to LLM (" sign), collect it in just simple string or markdown.
     # You need to collect it in such way:
     # User:
@@ -72,7 +69,7 @@ def join_context(context: list[dict[str, Any]]) -> str:
 
 async def generate_response(system_prompt: str, user_message: str) -> str:
     print("Processing...")
-    #TODO:
+    # TODO:
     # 1. Create messages array with system prompt and user message
     # 2. Generate response (use `ainvoke`, don't forget to `await` the response)
     # 3. Get usage (hint, usage can be found in response metadata (its dict) and has name 'token_usage', that is also
@@ -91,7 +88,7 @@ async def main():
     if user_question:
         print("\n--- Searching user database ---")
 
-        #TODO:
+        # TODO:
         # 1. Get all users (use UserClient)
         # 2. Split all users on batches (100 users in 1 batch). We need it since LLMs have its limited context window
         # 3. Prepare tasks for async run of response generation for users batches:

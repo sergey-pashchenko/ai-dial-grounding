@@ -1,15 +1,6 @@
-from enum import StrEnum
 from typing import Any
-from langchain_core.messages import SystemMessage, HumanMessage
-from langchain_core.output_parsers import PydanticOutputParser
-from langchain_core.prompts import SystemMessagePromptTemplate, ChatPromptTemplate
-from langchain_openai import AzureChatOpenAI
-from openai import BaseModel
-from pydantic import SecretStr, Field
-from task._constants import DIAL_URL, API_KEY
-from task.user_client import UserClient
 
-#TODO:
+# TODO:
 # Before implementation open the `api_based_grounding.png` to see the flow of app
 
 QUERY_ANALYSIS_PROMPT = """You are a query analysis system that extracts search parameters from user questions about users.
@@ -59,12 +50,12 @@ USER_PROMPT = """## RAG CONTEXT:
 {query}"""
 
 
-#TODO:
+# TODO:
 # 1. Create AzureChatOpenAI client
 # 2. Create UserClient
 
 
-#TODO:
+# TODO:
 # Now we need to create pydentic models that will be user for search and their JSON schema will be passed to LLM by
 # langchain. In response from LLM we expect to get response in such format (JSON by JSON Schema)
 # 1. SearchField class, extend StrEnum and has constants: name, surname, email
@@ -78,7 +69,7 @@ USER_PROMPT = """## RAG CONTEXT:
 
 def retrieve_context(user_question: str) -> list[dict[str, Any]]:
     """Extract search parameters from user query and retrieve matching users."""
-    #TODO:
+    # TODO:
     # 1. Create PydanticOutputParser with `pydantic_object=SearchRequests` as `parser`
     # 2. Create messages array with:
     #       - use SystemMessagePromptTemplate and from template generate system message from QUERY_ANALYSIS_PROMPT
@@ -98,7 +89,7 @@ def retrieve_context(user_question: str) -> list[dict[str, Any]]:
 
 def augment_prompt(user_question: str, context: list[dict[str, Any]]) -> str:
     """Combine user query with retrieved context into a formatted prompt."""
-    #TODO:
+    # TODO:
     # 1. Prepare context from users JSONs in the same way as in `no_grounding.py` `join_context` method (collect as one string)
     # 2. Make augmentation for USER_PROMPT
     # 3. print augmented prompt
@@ -108,7 +99,7 @@ def augment_prompt(user_question: str, context: list[dict[str, Any]]) -> str:
 
 def generate_answer(augmented_prompt: str) -> str:
     """Generate final answer using the augmented prompt."""
-    #TODO:
+    # TODO:
     # 1. Create messages array with:
     #       - SYSTEM_PROMPT
     #       - augmented_prompt
@@ -124,7 +115,7 @@ def main():
     print(" - Find users with surname Adams")
     print(" - Do we have smbd with name John that love painting?")
 
-    #TODO:
+    # TODO:
     # 1. Create infinite loop
     # 2. Get input from console as `user_question`
     # 3. retrieve context
